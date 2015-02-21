@@ -16,7 +16,7 @@ import urllib2
 def request(args,exchange):
 	data = {
 	"securities": exchange,
-	"fields": ["DS002","DS122","RR250","IS040"]}
+	"fields": ["DS002","DS122","DS318","RR250","IS040"]}
 	req = urllib2.Request('https://{}/request?ns=blp&service=refdata&type=ReferenceDataRequest'.format(args.host))
 	req.add_header('Content-Type', 'application/json')
 
