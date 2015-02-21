@@ -16,7 +16,7 @@ import urllib2
 def request(args,exchange):
 	data = {
 	"securities": exchange,
-	"fields": ["DS002","DS122","DS318","RR250","IS040"]}
+	"fields": ["DS588","DS002","DS122","DS318","RR250","IS040"]}
 	req = urllib2.Request('https://{}/request?ns=blp&service=refdata&type=ReferenceDataRequest'.format(args.host))
 	req.add_header('Content-Type', 'application/json')
 
@@ -50,23 +50,60 @@ def loop():
 if __name__ == "__main__":
 		
 
-	list_of_stock_exchange=["nasdaq","nyse","amex"]
+	list_of_stock_exchange=["nasdaq"]#,"nyse","amex"]
+	# list_of_stock_exchange=["nasdaq","nyse","amex"]
 	directory= str(os.path.realpath(__file__)).replace('filter.py','')
 	for exchange in list_of_stock_exchange:
 		path=directory+exchange+".csv"
 
 		data=pd.read_csv(path)
+		data['description']='na'
+		data['website']='na'
+
+		data['market_cap']=0
+		data['net_income_before_eo']=0
 		for i in range(len(data)):
 			data['Symbol'][i]=data['Symbol'][i]+" US Equity"
 			loop()
 
-		print list(data.Symbol)
+		'''
+		{"description":'DS318',
+		'website':'DS588',
+		'market_cap':'IS040',
+		'net_income_before_eo':'RR250'
 
 
-		data=sys.exit(main(list(data.Symbol)[:110]))
-		# f=open(exchange+'.json','w')
-		# f.write(json.dumps(data))
-		print data
+
+		}
+		'''
+		list_of_stickers= list(data.Symbol)
+		for j in range(len(list_of_stickers)):
+			temp_data=sys.exit(main(list_of_stickers[j]))[0]
+			data['description'][j]=temp_data['data']['fieldData']['DS318']
+			data['website'][j]=temp_data['data']['fieldData']["DS588"]
+			data['market_cap'][j]=temp_data['data']['fieldData']["IS040"]
+			# data['market_cap'][j]=temp_data['data']['fieldData']["IS040"]
+			data['net_income_before_eo'][j]=temp_data['data']['fieldData']["RR250"]
+
+		data.to_csv(directory+'db/'+exchange+'.csv')
+
+
+
+
+
+		# data=sys.exit(main(list_of_stickers[:110]))
+		# # f=open(exchange+'.json','w')
+		# # f.write(json.dumps(data))
+		# print data
+
+
+			
+			# f=open(exchange+'.json','w')
+			# f.write(json.dumps(data))
+			# for item in data['data']:
+			# 	#business description
+			# 	print item["fieldData"]["DS318"]
+			# 	#DS588
 
 
 	
