@@ -76,12 +76,12 @@ if __name__ == "__main__":
 
 		}
 		'''
-		list_of_stickers= list(data.Symbol)
+		list_of_stickers= list(data.Symbol[:2])
 		for j in range(len(list_of_stickers)):
-			temp_data=sys.exit(main(list_of_stickers[j]))[0]
-			data['description'][j]=temp_data['data']['fieldData']['DS318']
-			data['website'][j]=temp_data['data']['fieldData']["DS588"]
-			data['market_cap'][j]=temp_data['data']['fieldData']["IS040"]
+			temp_data=sys.exit(main(list_of_stickers[j]))['data'][0]["securityData"][0]['fieldData']
+			data['description'][j]=temp_data['DS318']
+			data['website'][j]=temp_data["DS588"]
+			data['market_cap'][j]=temp_data["IS040"]
 			# data['market_cap'][j]=temp_data['data']['fieldData']["IS040"]
 			data['net_income_before_eo'][j]=temp_data['data']['fieldData']["RR250"]
 
