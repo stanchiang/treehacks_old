@@ -1,6 +1,5 @@
-#!/usr/bin/env python2
-
-# usage: python HistoricalDataRequest.py <host-ip>
+#!/usr/local/Cellar/python/2.7.6/bin/python
+# -*- coding: utf-8 -usage: python HistoricalDataRequest.py <host-ip>
 
 import pandas as pd 
 import os
@@ -98,9 +97,9 @@ if __name__ == "__main__":
 			# print temp_data
 			# print temp_data
 			if 'DS318' in temp_data:
-				data['description'][j]=temp_data['DS318']
+				data['description'][j]=temp_data['DS318'].encode('utf-8')
 			if 'DS588' in temp_data:
-				data['website'][j]=temp_data["DS588"]
+				data['website'][j]=temp_data["DS588"].encode('utf-8')
 			# data['market_cap'][j]=temp_data["IS040"]
 			# data['market_cap'][j]=temp_data['data']['fieldData']["IS040"]
 			# data['net_income_before_eo'][j]=temp_data["RR250"]
