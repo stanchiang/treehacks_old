@@ -36,7 +36,7 @@ data_path=directory+'/db/nasdaq.csv'
 
 data=pd.read_csv(data_path)
 
-
+data=data.irow(range(20))
 
 #DATA FILTER
 
@@ -181,7 +181,15 @@ print MATRIX
 
 
 
-NETWORK={"nodes":[{"name":data['Name'].irow(i),"group":data['industry'].irow(i)} for i in range(len(data["Name"]))],
+NETWORK={"nodes":
+                [{"name":{
+                        'name':data['Name'].irow(i),
+                        'description':data['description'].irow(i),
+                        'industry':data['industry'].irow(i),
+                        'Sector':data['Sector'].irow(i)
+                        },
+                "group":data['industry'].irow(i)
+                } for i in range(len(data["Name"]))],
         "links":[]
         }
 
